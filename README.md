@@ -1,0 +1,2 @@
+# spinwinibot
+SpinWin Telegram Bot
