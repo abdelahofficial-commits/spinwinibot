@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>SpinWin</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--red:#E63946;--red-dark:#9B1D24;--red-glow:rgba(230,57,70,0.4);--white:#F1FAEE;--black:#0A0A0A;--gray:#1A1A1A;--gray2:#2A2A2A}
@@ -36,15 +37,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tap-section{display:flex;flex-direction:column;align-items:center;padding:10px 20px 24px;position:relative}
 .tap-ring{width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(230,57,70,0.08) 0%,transparent 70%);border:2px solid rgba(230,57,70,0.2);display:flex;align-items:center;justify-content:center;animation:pulse-ring 2s ease-in-out infinite}
 @keyframes pulse-ring{0%,100%{box-shadow:0 0 0 0 rgba(230,57,70,0.3)}50%{box-shadow:0 0 0 20px rgba(230,57,70,0)}}
-.tap-btn{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,var(--red) 50%,var(--red-dark));border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 40px var(--red-glow),inset 0 2px 4px rgba(255,255,255,0.2);transition:transform 0.08s}
+.tap-btn{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,var(--red) 50%,var(--red-dark));border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 40px var(--red-glow),inset 0 2px 4px rgba(255,255,255,0.2);transition:transform 0.08s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .tap-btn:active{transform:scale(0.93)}
-.tap-btn-icon{font-size:40px}
-.tap-btn-text{font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:2px;color:rgba(255,255,255,0.9);margin-top:4px}
+.tap-btn-icon{font-size:40px;pointer-events:none}
+.tap-btn-text{font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:2px;color:rgba(255,255,255,0.9);margin-top:4px;pointer-events:none}
 .tap-hint{margin-top:16px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3)}
 .tap-hint span{color:var(--red)}
-.float-text{position:absolute;font-family:'Bebas Neue',cursive;font-size:28px;color:var(--red);pointer-events:none;animation:float-up 0.8s ease-out forwards;text-shadow:0 0 10px var(--red-glow)}
+.float-text{position:absolute;font-family:'Bebas Neue',cursive;font-size:28px;color:var(--red);pointer-events:none;animation:float-up 0.8s ease-out forwards;text-shadow:0 0 10px var(--red-glow);z-index:999}
 @keyframes float-up{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.3)}}
-.boost-card{margin:0 20px;background:var(--gray);border:1px solid rgba(230,57,70,0.2);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer}
+.boost-card{margin:0 20px;background:var(--gray);border:1px solid rgba(230,57,70,0.2);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;touch-action:manipulation}
 .boost-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--red-dark),var(--red));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .boost-info{flex:1}
 .boost-title{font-size:15px;font-weight:700;margin-bottom:3px}
@@ -62,18 +63,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .spin-counter{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
 .spin-counter-label{font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase}
 .spin-counter-value{font-family:'Bebas Neue',cursive;font-size:28px;color:var(--red)}
-.spin-action-btn{width:100%;max-width:320px;padding:18px;background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:14px;color:white;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;cursor:pointer;box-shadow:0 4px 20px var(--red-glow)}
+.spin-action-btn{width:100%;max-width:320px;padding:18px;background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:14px;color:white;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;cursor:pointer;box-shadow:0 4px 20px var(--red-glow);touch-action:manipulation}
 .spin-action-btn:disabled{background:var(--gray2);box-shadow:none;color:rgba(255,255,255,0.3);cursor:not-allowed}
 .tasks-page,.refer-page,.withdraw-page{padding:20px}
 .page-title{font-family:'Bebas Neue',cursive;font-size:32px;letter-spacing:3px;margin-bottom:4px}
 .page-subtitle{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
-.task-item{background:var(--gray);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:10px;cursor:pointer}
+.task-item{background:var(--gray);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:10px;cursor:pointer;touch-action:manipulation}
 .task-item.done{opacity:0.5;pointer-events:none}
 .task-icon{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--red-dark),var(--red));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .task-info{flex:1}
 .task-name{font-size:15px;font-weight:700;margin-bottom:3px}
 .task-reward{font-size:13px;color:var(--red);font-weight:600}
-.task-action{background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:8px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;padding:8px 14px;cursor:pointer}
+.task-action{background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:8px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;padding:8px 14px;cursor:pointer;touch-action:manipulation}
 .refer-hero{background:linear-gradient(135deg,var(--red-dark),rgba(230,57,70,0.3));border:1px solid rgba(230,57,70,0.3);border-radius:18px;padding:24px;text-align:center;margin-bottom:20px}
 .refer-icon{font-size:48px;margin-bottom:12px}
 .refer-title{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;margin-bottom:6px}
@@ -84,15 +85,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .refer-bonus-label{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
 .refer-link-box{background:var(--gray);border:1px solid rgba(230,57,70,0.3);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .refer-link-text{flex:1;font-size:13px;color:rgba(255,255,255,0.5);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.copy-btn{background:var(--red);border:none;border-radius:8px;color:white;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;padding:8px 16px;cursor:pointer;flex-shrink:0}
+.copy-btn{background:var(--red);border:none;border-radius:8px;color:white;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;padding:8px 16px;cursor:pointer;flex-shrink:0;touch-action:manipulation}
 .copy-btn.copied{background:#2ecc71}
-.share-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:14px;color:white;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;cursor:pointer}
+.share-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:14px;color:white;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;cursor:pointer;touch-action:manipulation}
 .withdraw-balance{background:linear-gradient(135deg,rgba(230,57,70,0.2),rgba(230,57,70,0.05));border:1px solid rgba(230,57,70,0.3);border-radius:18px;padding:24px;text-align:center;margin-bottom:20px}
 .withdraw-balance-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px}
 .withdraw-balance-amount{font-family:'Bebas Neue',cursive;font-size:56px}
 .withdraw-balance-unit{font-size:13px;color:var(--red);font-weight:700;letter-spacing:2px;margin-top:4px}
 .withdraw-method-title{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:12px}
-.method-item{background:var(--gray);border:2px solid transparent;border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:10px;cursor:pointer}
+.method-item{background:var(--gray);border:2px solid transparent;border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:10px;cursor:pointer;touch-action:manipulation}
 .method-item.selected{border-color:var(--red)}
 .method-icon{font-size:28px}
 .method-info{flex:1}
@@ -103,14 +104,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .withdraw-input{background:var(--gray);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;width:100%;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:16px;margin-bottom:12px;outline:none}
 .withdraw-input:focus{border-color:var(--red)}
 .withdraw-input::placeholder{color:rgba(255,255,255,0.25)}
-.withdraw-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:14px;color:white;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;cursor:pointer}
+.withdraw-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--red-dark),var(--red));border:none;border-radius:14px;color:white;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;cursor:pointer;touch-action:manipulation}
 .nav-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(15,15,15,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.06);display:flex;padding:8px 0 12px;z-index:100}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 0}
-.nav-icon{font-size:22px;transition:transform 0.2s}
-.nav-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:color 0.2s}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 0;touch-action:manipulation}
+.nav-icon{font-size:22px;transition:transform 0.2s;pointer-events:none}
+.nav-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:color 0.2s;pointer-events:none}
 .nav-item.active .nav-label{color:var(--red)}
 .nav-item.active .nav-icon{transform:scale(1.15)}
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--red);color:white;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--red);color:white;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;opacity:0;transition:all 0.3s;z-index:9999;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
@@ -136,10 +137,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="stat-card"><div class="stat-label">Spins Left</div><div class="stat-value" id="spinsDisplay">3</div></div>
 </div>
 <div class="tap-section">
-<div class="tap-ring"><button class="tap-btn" id="tapBtn" onclick="handleTap(event)"><div class="tap-btn-icon">🎰</div><div class="tap-btn-text">TAP</div></button></div>
+<div class="tap-ring">
+<button class="tap-btn" id="tapBtn"><div class="tap-btn-icon">🎰</div><div class="tap-btn-text">TAP</div></button>
+</div>
 <div class="tap-hint">▷ TAP TO EARN <span>INSTANTLY</span></div>
 </div>
-<div class="boost-card" onclick="navigate('tasks')"><div class="boost-icon">⚡</div><div class="boost-info"><div class="boost-title">Quick Boost</div><div class="boost-sub">Complete Tasks — Earn 50 Coins Each!</div></div><div class="boost-arrow">›</div></div>
+<div class="boost-card" id="boostCard"><div class="boost-icon">⚡</div><div class="boost-info"><div class="boost-title">Quick Boost</div><div class="boost-sub">Complete Tasks — Earn 50 Coins Each!</div></div><div class="boost-arrow">›</div></div>
 </div>
 <div class="page" id="page-spin">
 <div class="spin-page">
@@ -150,18 +153,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="spin-result" id="spinResult">Press Spin to Play!</div>
 <div class="spin-counter"><div><div class="spin-counter-label">Spins Remaining</div></div><div class="spin-counter-value" id="spinsCounter">3</div></div>
 </div>
-<button class="spin-action-btn" id="spinBtn" onclick="doSpin()">🎰 SPIN NOW</button>
+<button class="spin-action-btn" id="spinBtn">🎰 SPIN NOW</button>
 </div>
 </div>
 <div class="page" id="page-tasks">
 <div class="tasks-page">
 <div class="page-title">Tasks</div>
 <div class="page-subtitle">Complete tasks — earn instant coins!</div>
-<div class="task-item" id="task1"><div class="task-icon">📢</div><div class="task-info"><div class="task-name">Join SpinWin Channel</div><div class="task-reward">+50 Coins</div></div><button class="task-action" onclick="completeTask('task1',50)">Start</button></div>
-<div class="task-item" id="task2"><div class="task-icon">👥</div><div class="task-info"><div class="task-name">Invite 3 Friends</div><div class="task-reward">+100 Coins</div></div><button class="task-action" onclick="completeTask('task2',100)">Start</button></div>
-<div class="task-item" id="task3"><div class="task-icon">🎯</div><div class="task-info"><div class="task-name">Tap 100 Times</div><div class="task-reward">+75 Coins</div></div><button class="task-action" onclick="completeTask('task3',75)">Start</button></div>
-<div class="task-item" id="task4"><div class="task-icon">🎰</div><div class="task-info"><div class="task-name">Spin 5 Times</div><div class="task-reward">+60 Coins</div></div><button class="task-action" onclick="completeTask('task4',60)">Start</button></div>
-<div class="task-item" id="task5"><div class="task-icon">⭐</div><div class="task-info"><div class="task-name">Rate SpinWin 5 Stars</div><div class="task-reward">+30 Coins</div></div><button class="task-action" onclick="completeTask('task5',30)">Start</button></div>
+<div class="task-item" id="task1"><div class="task-icon">📢</div><div class="task-info"><div class="task-name">Join SpinWin Channel</div><div class="task-reward">+50 Coins</div></div><button class="task-action" data-task="task1" data-reward="50">Start</button></div>
+<div class="task-item" id="task2"><div class="task-icon">👥</div><div class="task-info"><div class="task-name">Invite 3 Friends</div><div class="task-reward">+100 Coins</div></div><button class="task-action" data-task="task2" data-reward="100">Start</button></div>
+<div class="task-item" id="task3"><div class="task-icon">🎯</div><div class="task-info"><div class="task-name">Tap 100 Times</div><div class="task-reward">+75 Coins</div></div><button class="task-action" data-task="task3" data-reward="75">Start</button></div>
+<div class="task-item" id="task4"><div class="task-icon">🎰</div><div class="task-info"><div class="task-name">Spin 5 Times</div><div class="task-reward">+60 Coins</div></div><button class="task-action" data-task="task4" data-reward="60">Start</button></div>
+<div class="task-item" id="task5"><div class="task-icon">⭐</div><div class="task-info"><div class="task-name">Rate SpinWin 5 Stars</div><div class="task-reward">+30 Coins</div></div><button class="task-action" data-task="task5" data-reward="30">Start</button></div>
 </div>
 </div>
 <div class="page" id="page-refer">
@@ -172,8 +175,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="refer-bonus-card"><div class="refer-bonus-amount">+100</div><div class="refer-bonus-label">Premium</div></div>
 <div class="refer-bonus-card"><div class="refer-bonus-amount" id="referCount">0</div><div class="refer-bonus-label">Invited</div></div>
 </div>
-<div class="refer-link-box"><div class="refer-link-text" id="referLink">https://t.me/SpinWinBot?start=user123</div><button class="copy-btn" id="copyBtn" onclick="copyLink()">Copy</button></div>
-<button class="share-btn" onclick="shareLink()">📤 SHARE YOUR LINK</button>
+<div class="refer-link-box"><div class="refer-link-text" id="referLink">https://t.me/SpinWinBot?start=user123</div><button class="copy-btn" id="copyBtn">Copy</button></div>
+<button class="share-btn" id="shareBtn">📤 SHARE YOUR LINK</button>
 </div>
 </div>
 <div class="page" id="page-withdraw">
@@ -181,26 +184,31 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="withdraw-balance"><div class="withdraw-balance-label">Available Balance</div><div class="withdraw-balance-amount" id="withdrawBalance">0</div><div class="withdraw-balance-unit">SW Coins</div></div>
 <div class="withdraw-methods">
 <div class="withdraw-method-title">Select Method</div>
-<div class="method-item selected" onclick="selectMethod(this)"><div class="method-icon">📱</div><div class="method-info"><div class="method-name">Telebirr</div><div class="method-sub">Min. 500 Coins</div></div><div class="method-radio active"></div></div>
-<div class="method-item" onclick="selectMethod(this)"><div class="method-icon">🏦</div><div class="method-info"><div class="method-name">CBE Birr</div><div class="method-sub">Min. 1000 Coins</div></div><div class="method-radio"></div></div>
-<div class="method-item" onclick="selectMethod(this)"><div class="method-icon">💳</div><div class="method-info"><div class="method-name">Bank Transfer</div><div class="method-sub">Min. 2000 Coins</div></div><div class="method-radio"></div></div>
+<div class="method-item selected"><div class="method-icon">📱</div><div class="method-info"><div class="method-name">Telebirr</div><div class="method-sub">Min. 500 Coins</div></div><div class="method-radio active"></div></div>
+<div class="method-item"><div class="method-icon">🏦</div><div class="method-info"><div class="method-name">CBE Birr</div><div class="method-sub">Min. 1000 Coins</div></div><div class="method-radio"></div></div>
+<div class="method-item"><div class="method-icon">💳</div><div class="method-info"><div class="method-name">Bank Transfer</div><div class="method-sub">Min. 2000 Coins</div></div><div class="method-radio"></div></div>
 </div>
 <input class="withdraw-input" placeholder="Enter phone / account number" id="withdrawAccount"/>
-<button class="withdraw-btn" onclick="doWithdraw()">💸 REQUEST WITHDRAWAL</button>
+<button class="withdraw-btn" id="withdrawBtn">💸 REQUEST WITHDRAWAL</button>
 </div>
 </div>
 </div>
 <div class="nav-bar">
-<div class="nav-item active" onclick="navigate('dashboard')"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
-<div class="nav-item" onclick="navigate('spin')"><div class="nav-icon">🎰</div><div class="nav-label">Spin</div></div>
-<div class="nav-item" onclick="navigate('tasks')"><div class="nav-icon">✅</div><div class="nav-label">Tasks</div></div>
-<div class="nav-item" onclick="navigate('refer')"><div class="nav-icon">👥</div><div class="nav-label">Refer</div></div>
-<div class="nav-item" onclick="navigate('withdraw')"><div class="nav-icon">💸</div><div class="nav-label">Withdraw</div></div>
+<div class="nav-item active" data-page="dashboard"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
+<div class="nav-item" data-page="spin"><div class="nav-icon">🎰</div><div class="nav-label">Spin</div></div>
+<div class="nav-item" data-page="tasks"><div class="nav-icon">✅</div><div class="nav-label">Tasks</div></div>
+<div class="nav-item" data-page="refer"><div class="nav-icon">👥</div><div class="nav-label">Refer</div></div>
+<div class="nav-item" data-page="withdraw"><div class="nav-icon">💸</div><div class="nav-label">Withdraw</div></div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const state={coins:0,taps:0,spins:3,tapValue:1};
-const TIERS=[{name:'Bronze',min:0,max:500,tapVal:1},{name:'Silver',min:500,max:2000,tapVal:2},{name:'Gold',min:2000,max:5000,tapVal:5},{name:'Diamond',min:5000,max:Infinity,tapVal:10}];
-const SYMBOLS=['🍋','🍒','⭐','🎯','💎','🔥'];
-const WIN_COMBOS={'💎💎💎':500,'🔥🔥🔥':300,'⭐⭐⭐':200,'🍒🍒🍒':100,'🍋🍋🍋':50,'🎯🎯🎯':150};
-function navigate(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');const pages=['dashboard','spin','tasks','refer','withdraw'];document.querySelectorAll('.nav-item')[pages.indexOf(pa
+// Telegram WebApp init
+const tg = window.Telegram && window.Telegram.WebApp;
+if (tg) { tg.ready(); tg.expand(); }
+
+const state = {coins:0,taps:0,spins:3,tapValue:1};
+const TIERS = [{name:'Bronze',min:0,max:500,tapVal:1},{name:'Silver',min:500,max:2000,tapVal:2},{name:'Gold',min:2000,max:5000,tapVal:5},{name:'Diamond',min:5000,max:Infinity,tapVal:10}];
+const SYMBOLS = ['🍋','🍒','⭐','🎯','💎','🔥'];
+const WIN_COMBOS = {'💎💎💎':500,'🔥🔥🔥':300,'⭐⭐⭐':200,'🍒🍒🍒':100,'🍋🍋🍋':50,'🎯🎯🎯':150};
+
+                                                                                         
