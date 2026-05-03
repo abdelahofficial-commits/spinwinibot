@@ -7,11 +7,16 @@ const WEBAPP_URL = process.env.WEBAPP_URL || '';
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (req, res) => {
+
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-app.listen(PORT, () => console.log('Server running on port ' + PORT));
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('Server running on port ' + PORT);
+});
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 const users = {};
