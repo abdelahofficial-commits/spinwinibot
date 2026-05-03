@@ -4,21 +4,18 @@ const path = require('path');
 
 const TOKEN = process.env.BOT_TOKEN;
 const WEBAPP_URL = process.env.WEBAPP_URL || '';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const app = express();
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 app.listen(PORT, '0.0.0.0', () => {
   console.log('Server running on port ' + PORT);
 });
 
-const bot = new TelegramBot(TOKEN, { polling: true });
+const bot = new TelegramBot(TOKEN, { polling: { autoStart: true, params: { timeout: 10 } } });
 const users = {};
 
 bot.onText(/\/start/, (msg) => {
