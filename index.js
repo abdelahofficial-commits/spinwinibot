@@ -1,9 +1,19 @@
 const TelegramBot = require('node-telegram-bot-api');
+const express = require('express');
+const path = require('path');
 
 const TOKEN = process.env.BOT_TOKEN;
-const WEBAPP_URL = process.env.WEBAPP_URL || 'https://your-app.railway.app/public/index.html';
-const bot = new TelegramBot(TOKEN, { polling: true });
+const WEBAPP_URL = process.env.WEBAPP_URL || '';
+const PORT = process.env.PORT || 3000;
 
+const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.listen(PORT, () => console.log('Server running on port ' + PORT));
+
+const bot = new TelegramBot(TOKEN, { polling: true });
 const users = {};
 
 bot.onText(/\/start/, (msg) => {
@@ -33,4 +43,4 @@ bot.on('callback_query', (query) => {
   bot.answerCallbackQuery(query.id);
 });
 
-console.log('SpinWin Bot hojjechaa jira...');
+console.log('SpinWin Bot fi Server hojjechaa jira...');
